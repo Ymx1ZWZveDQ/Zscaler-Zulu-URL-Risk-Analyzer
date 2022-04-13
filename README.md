@@ -1,4 +1,4 @@
-# Zulu.Zscaler 2022.04.12
+# Zulu Zscaler Site Analyzer 2022.04.12
 Scan domains and rate them based on Zulu Zscaler Risk Analyzer 
 
 Required >>>> selenium
