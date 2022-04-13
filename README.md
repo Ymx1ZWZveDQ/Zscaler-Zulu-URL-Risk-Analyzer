@@ -6,3 +6,7 @@ https://www.selenium.dev/downloads/
 
 Required >>>> chromedriver.exe
 https://sites.google.com/chromium.org/driver/downloads
+
+---
+Future Release will Require
+https://pypi.org/project/webdriver-manager/#use-with-chrome
