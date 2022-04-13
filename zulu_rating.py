@@ -4,7 +4,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import StaleElementReferenceException
 import time
 import re
-
+import os
+import sys
 
 #Variables
 checkurl = input("Enter URL to scan: ")
@@ -38,7 +39,27 @@ inputElement.send_keys(checkurl)
 submit = driver.find_element_by_css_selector('[value="Analyze"]')
 submit.click()
 
-#scrub page for Reputation Score
+#exit Script
+def exit(t):
+    while t:
+        mins, secs = divmod(t, 60)
+        timer = '{:02d}:{:02d}'.format(mins, secs)
+        print(timer, end="\r")
+        time.sleep(1)
+        t -= 1
+    os.system("taskkill /im py.exe")
+
+#add to Clipboard
+def clipped(text):
+    command = 'echo ' + text.strip() + '| clip'
+    os.system(command)
+
+#restart Script
+def restart():
+    print("restarting",sys.argv)
+    os.execv(sys.executable, ['python'] + sys.argv)
+
+#scrub page for Reputation Score and print output
 while True:
 	try:
 		test = driver.find_element_by_id("rep-status").text
@@ -54,10 +75,23 @@ while True:
 		    		add_text = timestr, checkurl, score, isSafe, myURL
     				print(add_text, file=external_file)
     				external_file.close()
-			print("----SCORE----")
+			print("---------------------------------------")
+			print("---------Zulu URL Risk Analyzer--------")
+			print("---------------------------------------")
 			print(timestr, checkurl, score, isSafe, myURL)
+			print("---------------------------------------")
+			clipped(myURL)
+			print("Reprot copied to Clipboard")
+			print("---------------------------------------")
+			askrestart = input("Restart Script? (Y/N): ")
+			if askrestart=='Y' or askrestart=='y' or askrestart=='yes':
+				restart()
+			else:
+				print("Exiting...")
+				exit(int(10))
 			break
 		else:
 			print("Scanning...")
+			time.sleep(1)
 	except StaleElementReferenceException:
 		continue
