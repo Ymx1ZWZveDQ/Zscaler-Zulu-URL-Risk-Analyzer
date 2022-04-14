@@ -82,7 +82,7 @@ while True:
 	if rep == "Completed":
 		score = driver.find_element(By.ID, "rep-score").text
 		score = re.sub('/100', '', score)
-		intScore = int(score)
+		#intScore = int(score)
 		if int(score) >= 60:
 			isSafe = "Fail"
 		else:	
