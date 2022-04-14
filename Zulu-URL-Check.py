@@ -11,11 +11,11 @@ import sys
 
 #Variables
 checkurl = input("Enter URL to rate: ")
-ZULU = "https://zulu.zscaler.com/"
-PATH = "C:\chromedriver.exe"
-Chrome = Service(PATH)
+zulu = "https://zulu.zscaler.com/"
+path = "C:\chromedriver.exe"
+chrome = Service(path)
 invalid = "invalid"
-timestr = time.strftime("%Y%m%d-%H%M%S")
+timeStr = time.strftime("%Y%m%d-%H%M%S")
 from os.path import expanduser
 home = expanduser("~")
 line = '---------------------------------------'
@@ -26,10 +26,10 @@ options = webdriver.ChromeOptions()
 options.add_argument('headless')
 options.add_argument("disable-gpu")
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
-driver = webdriver.Chrome(service=Chrome, options=options)
+driver = webdriver.Chrome(service=chrome, options=options)
 
 #Get ZULU
-driver.get(ZULU)
+driver.get(zulu)
 
 #Find URL text box and enter text
 #checkurl = "test.com"
@@ -49,7 +49,7 @@ def clipped(text):
 #Logging output to Desktop
 def logging():
 	with open(home+'\\Desktop\\log.txt', "a") as external_file:
-		add_text = timestr, checkurl, score, isSafe, myURL
+		add_text = timeStr, checkurl, score, isSafe, myURL
 		print(add_text, file=external_file)
 		external_file.close()
 
@@ -58,7 +58,7 @@ def printoutput():
 	print(line)
 	print("---------Zulu URL Risk Analyzer--------")
 	print(line)
-	print(timestr, checkurl, score, isSafe, myURL)
+	print(timeStr, checkurl, score, isSafe, myURL)
 	print(line)
 	clipped(myURL)
 	print("Reprot URL copied to Clipboard")
@@ -68,7 +68,7 @@ def printoutput():
 #validate page and fetch Reputation Score using logging()/printoutput()/restart()
 while True:
 	InvalidURL = driver.current_url
-	if  invalid in InvalidURL or ZULU == InvalidURL:
+	if  invalid in InvalidURL or zulu == InvalidURL:
 		driver.quit()
 		print(line)
 		print("Invalid URL - " + checkurl)
